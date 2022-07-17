@@ -6,7 +6,10 @@ export const state = () => ({
   book: null,
   texts: [],
   page: 1,
-  limit: 5
+  limit: 5,
+  articles: [],
+  article: [],
+  articleText: []
 })
 
 export const mutations = {
@@ -22,6 +25,14 @@ export const mutations = {
 
   texts: (state, payload) => {
     state.texts = payload
+  },
+
+  articles: (state, payload) => {
+    state.articles = payload
+  },
+
+  articleText: (state, payload) => {
+    state.articleText = payload
   }
 }
 
@@ -38,6 +49,14 @@ export const getters = {
 
   texts (state) {
     return state.texts
+  },
+
+  articles (state) {
+    return state.articles
+  },
+
+  articleText (state) {
+    return state.articleText
   },
 
   pages (state) {
@@ -70,5 +89,20 @@ export const actions = {
     })
     const res = await this.$axios.get(`api/text?${params.toString()}`)
     commit('texts', res.data)
+  },
+
+  async getArticles ({ commit, state }) {
+    const res = await this.$axios
+      .get('diario_de_noticas/front_page')
+
+    commit('articles', res.data)
+  },
+
+  async getArticle ({ commit, state }) {
+    const res = await this.$axios
+      .post('diario_de_noticas/article', { url: state.article.url })
+
+    console.log(res.data)
+    commit('articleText', res.data)
   }
 }
