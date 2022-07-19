@@ -70,6 +70,7 @@ export const getters = {
 
 export const actions = {
   async setTranslation ({ commit }, word) {
+    commit('translation', null)
     const res = await this.$axios
       .get('api/text?$queryset=word&word=' + word.replace(',', ''))
     commit('translation', res.data[0].translation)
@@ -102,7 +103,6 @@ export const actions = {
     const res = await this.$axios
       .post('diario_de_noticas/article', { url: state.article.url })
 
-    console.log(res.data)
     commit('articleText', res.data)
   }
 }

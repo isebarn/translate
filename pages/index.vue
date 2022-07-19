@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-list>
       <v-list-item-group
         v-model="article"
@@ -7,25 +7,28 @@
         color="primary"
       >
         <v-list-item v-for="(article, i) in articles" :key="i" :value="article" @click="$router.push('article')">
-          <v-card :style="clc(article.category)" class="mt-5">
-            <v-img
-              v-if="article.src"
-              :src="article.src"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
-            >
-              <v-card-title>
-                <fun :word="article.kicker" />
+          <v-container fluid>
+            <v-card :style="clc(article.category)" class="mt-5">
+              <v-img
+                v-if="article.src"
+                :src="article.src"
+                class="white--text align-end"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="200px"
+                contain
+              >
+                <v-card-title>
+                  <fun :word="article.kicker ?? article.title" />
+                </v-card-title>
+              </v-img>
+              <v-card-title v-if="article.kicker" class="text--primary">
+                <fun :word="article.title" />
               </v-card-title>
-            </v-img>
-            <v-card-title class="text--primary">
-              <fun :word="article.title" />
-            </v-card-title>
-            <v-card-subtitle v-if="article.lead">
-              <fun :word="article.lead" />
-            </v-card-subtitle>
-          </v-card>
+              <v-card-subtitle v-if="article.lead">
+                <fun :word="article.lead" />
+              </v-card-subtitle>
+            </v-card>
+          </v-container>
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -92,21 +95,9 @@ export default {
       return colorInHSL
     },
     clc (god) {
-      console.log(this.hsl(stc(god)))
       return `background-color: ${this.hsl(stc(god))}`
-    } // const color = stc(null);
+    }
   }
 
 }
 </script>
-
-<style>
-.v-card {
-transition: opacity .2s ease-in-out;
-}
-
-.show-btns {
-color: rgba(255, 255, 255, 1) !important;
-}
-
-</style>
