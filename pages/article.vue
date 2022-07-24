@@ -1,19 +1,19 @@
 <template>
-  <v-container>
-    <v-list>
-      <v-banner
-        v-if="$device.isMobileOrTablet"
-        outlined
-        rounded
-        single-line
-        sticky
-      >
-        {{ translation }}
-      </v-banner>
-      <v-carousel hide-delimiters>
-        <v-carousel-item v-for="(group, j) in articleText" :key="j">
-          <template v-for="(text, i) in group">
-            <v-list-item-content :key="i">
+  <v-carousel hide-delimiters>
+    <v-carousel-item v-for="(group, j) in articleText" :key="j">
+      <v-row align-center justify-center>
+        <v-col cols="10" offset="1">
+          <v-banner
+            v-if="$device.isMobileOrTablet"
+            outlined
+            rounded
+            single-line
+            sticky
+          >
+            {{ translation }}
+          </v-banner>
+          <v-sheet v-for="(text, i) in group" :key="i">
+            <v-list-item-content>
               <v-list-item-title class="text-wrap">
                 <fun v-for="(word, j) in text.untranslated.split(' ')" :key="j" :word="word" />
               </v-list-item-title>
@@ -28,11 +28,11 @@
                 </v-card>
               </v-hover>
             </v-list-item-content>
-          </template>
-        </v-carousel-item>
-      </v-carousel>
-    </v-list>
-  </v-container>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-carousel-item>
+  </v-carousel>
 </template>
 
 <script>
