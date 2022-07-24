@@ -10,23 +10,27 @@
       >
         {{ translation }}
       </v-banner>
-      <template v-for="(text, i) in articleText">
-        <v-list-item-content :key="i">
-          <v-list-item-title class="text-wrap">
-            <fun v-for="(word, j) in text.untranslated.split(' ')" :key="j" :word="word" />
-          </v-list-item-title>
-          <v-hover v-slot="{ hover }">
-            <v-card
-              flat
-              :class="{ 'on-hover': hover }"
-            >
-              <v-list-item-title class="green--text text-wrap" style="font-family:'Droid Sans';">
-                {{ text.translation }}
+      <v-carousel hide-delimiters>
+        <v-carousel-item v-for="(group, j) in articleText" :key="j">
+          <template v-for="(text, i) in group">
+            <v-list-item-content :key="i">
+              <v-list-item-title class="text-wrap">
+                <fun v-for="(word, j) in text.untranslated.split(' ')" :key="j" :word="word" />
               </v-list-item-title>
-            </v-card>
-          </v-hover>
-        </v-list-item-content>
-      </template>
+              <v-hover v-slot="{ hover }">
+                <v-card
+                  flat
+                  :class="{ 'on-hover': hover }"
+                >
+                  <v-list-item-title class="green--text text-wrap" style="font-family:'Droid Sans';">
+                    {{ text.translation }}
+                  </v-list-item-title>
+                </v-card>
+              </v-hover>
+            </v-list-item-content>
+          </template>
+        </v-carousel-item>
+      </v-carousel>
     </v-list>
   </v-container>
 </template>
